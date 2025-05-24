@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Claudio Andrés de los Santos - Asistente Virtual | Traductor | Redactor Freelance</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f2f5;
+            color: #333;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        header {
+            background-color: #4F46E5; /* Indigo */
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+            border-bottom-left-radius: 20px;
+            border-bottom-right-radius: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+        header h1 {
+            font-size: 2.8em;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+        header p {
+            font-size: 1.2em;
+            margin-bottom: 10px;
+        }
+        header .contact-info {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            font-size: 1em;
+        }
+        .section-title {
+            font-size: 2.2em;
+            font-weight: 700;
+            color: #4F46E5;
+            text-align: center;
+            margin-bottom: 40px;
+            padding-top: 60px; /* Space for sticky header if implemented */
+        }
+        .card {
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+        .button-group {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 30px;
+        }
+        .service-button {
+            background-color: #6366F1; /* Indigo-500 */
+            color: white;
+            padding: 15px 30px;
+            border-radius: 10px;
+            font-weight: 600;
+            transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+            border: none;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        .service-button:hover {
+            background-color: #4338CA; /* Indigo-700 */
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+        }
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        .portfolio-item {
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .portfolio-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+        .portfolio-item img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-bottom: 1px solid #eee;
+        }
+        .portfolio-content {
+            padding: 20px;
+        }
+        .portfolio-content h3 {
+            font-size: 1.5em;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #4F46E5;
+        }
+        .portfolio-content p {
+            font-size: 0.95em;
+            color: #555;
+            margin-bottom: 15px;
+        }
+        .portfolio-link {
+            display: inline-block;
+            background-color: #10B981; /* Emerald */
+            color: white;
+            padding: 8px 15px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: background-color 0.3s ease;
+        }
+        .portfolio-link:hover {
+            background-color: #059669; /* Emerald-700 */
+        }
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 30px 20px;
+            margin-top: 60px;
+            border-top-left-radius: 20px;
+            border-top-right-radius: 20px;
+        }
+        footer p {
+            font-size: 0.9em;
+        }
+        .icon {
+            display: inline-block;
+            width: 24px;
+            height: 24px;
+            vertical-align: middle;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 1000; /* Sit on top */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgba(0,0,0,0.6); /* Black w/ opacity */
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-content {
+            background-color: #fefefe;
+            margin: auto;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+            width: 90%;
+            max-width: 600px;
+            position: relative;
+            animation: fadeIn 0.3s ease-out;
+        }
+        .close-button {
+            color: #aaa;
+            position: absolute;
+            top: 15px;
+            right: 25px;
+            font-size: 32px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+        .close-button:hover,
+        .close-button:focus {
+            color: #333;
+            text-decoration: none;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Claudio Andrés de los Santos</h1>
+            <p class="text-xl font-light">Asistente Virtual | Traductor | Transcriptor | Redactor Freelance</p>
+            <div class="contact-info">
+                <span>
+                    <i data-lucide="map-pin" class="icon"></i> República Dominicana
+                </span>
+                <span>
+                    <i data-lucide="mail" class="icon"></i> asistenteandresrd@gmail.com
+                </span>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <section id="perfil-profesional" class="py-16">
+            <h2 class="section-title">Perfil Profesional</h2>
+            <div class="card">
+                <p class="text-lg text-gray-700">
+                    Profesional bilingüe especializado en traducción (español, inglés, francés), transcripción y redacción.
+                    Hábil en ofrecer soluciones rápidas, precisas y adaptadas a las necesidades de clientes internacionales y locales.
+                    Apasionado por la comunicación clara y el trabajo remoto.
+                </p>
+            </div>
+        </section>
+
+        <section id="servicios" class="py-16">
+            <h2 class="section-title">Nuestros Servicios</h2>
+            <div class="button-group">
+                <a href="#curriculums" class="service-button">
+                    <i data-lucide="file-text" class="icon"></i> Creación y Diseño de Currículums
+                </a>
+                <a href="#curriculums" class="service-button">
+                    <i data-lucide="mail" class="icon"></i> Cartas de Presentación
+                </a>
+                <a href="#trabajo-realizado" class="service-button">
+                    <i data-lucide="languages" class="icon"></i> Servicios de Traducción
+                </a>
+                <a href="#trabajo-realizado" class="service-button">
+                    <i data-lucide="mic" class="icon"></i> Transcripción Profesional
+                </a>
+                <a href="#trabajo-realizado" class="service-button">
+                    <i data-lucide="edit" class="icon"></i> Redacción Freelance
+                </a>
+                <a href="#contacto" class="service-button">
+                    <i data-lucide="headphones" class="icon"></i> Asistencia Virtual
+                </a>
+            </div>
+
+            <div id="curriculums" class="card mt-12 hidden">
+                <h3 class="text-xl font-semibold text-gray-800 mb-4">Creación y Diseño de Currículums y Cartas de Presentación</h3>
+                <p class="text-gray-700">
+                    Ofrecemos un servicio personalizado para la creación y diseño de currículums profesionales y cartas de presentación impactantes.
+                    Nos aseguramos de que cada documento destaque tus habilidades y experiencia, maximizando tus oportunidades laborales.
+                </p>
+                <ul class="list-disc list-inside text-gray-700 mt-4">
+                    <li>Diseños modernos y atractivos.</li>
+                    <li>Optimización de contenido para ATS (Applicant Tracking Systems).</li>
+                    <li>Redacción clara y concisa de tu experiencia.</li>
+                    <li>Adaptación a la industria y puesto deseado.</li>
+                </ul>
+            </div>
+            <script>
+                // Simple script to toggle visibility of the #curriculums section
+                document.querySelectorAll('a[href="#curriculums"]').forEach(button => {
+                    button.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        const curriculumsSection = document.getElementById('curriculums');
+                        curriculumsSection.classList.toggle('hidden');
+                        // Scroll to the section if it becomes visible
+                        if (!curriculumsSection.classList.contains('hidden')) {
+                            curriculumsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        }
+                    });
+                });
+            </script>
+        </section>
+
+        <section id="trabajo-realizado" class="py-16">
+            <h2 class="section-title">Trabajo Realizado</h2>
+            <div class="portfolio-grid">
+                <div class="portfolio-item">
+                    <img src="https://placehold.co/600x400/E0E7FF/4F46E5?text=Proyecto+Traducción" alt="Proyecto de Traducción">
+                    <div class="portfolio-content">
+                        <h3>Traducción de Documentos Legales</h3>
+                        <p>Traducción precisa de contratos y acuerdos para clientes internacionales, garantizando la fidelidad terminológica y cultural.</p>
+                        <a href="#" class="portfolio-link" data-project="Traducción de Documentos Legales">Ver Detalles</a>
+                    </div>
+                </div>
+
+                <div class="portfolio-item">
+                    <img src="https://placehold.co/600x400/D1FAE5/065F46?text=Proyecto+Transcripción" alt="Proyecto de Transcripción">
+                    <div class="portfolio-content">
+                        <h3>Transcripción de Entrevistas Académicas</h3>
+                        <p>Conversión de grabaciones de audio a texto para investigaciones académicas, con alta precisión y formato estructurado.</p>
+                        <a href="#" class="portfolio-link" data-project="Transcripción de Entrevistas Académicas">Ver Detalles</a>
+                    </div>
+                </div>
+
+                <div class="portfolio-item">
+                    <img src="https://placehold.co/600x400/FEE2E2/991B1B?text=Proyecto+Redacción" alt="Proyecto de Redacción">
+                    <div class="portfolio-content">
+                        <h3>Redacción de Artículos para Blog</h3>
+                        <p>Creación de contenido atractivo y optimizado para SEO para un blog de tecnología, aumentando el engagement del lector.</p>
+                        <a href="#" class="portfolio-link" data-project="Redacción de Artículos para Blog">Ver Detalles</a>
+                    </div>
+                </div>
+
+                <div class="portfolio-item">
+                    <img src="https://placehold.co/600x400/FFFBEB/92400E?text=Diseño+CV" alt="Diseño de Currículum">
+                    <div class="portfolio-content">
+                        <h3>Diseño de Currículum Profesional</h3>
+                        <p>Diseño y redacción de un currículum vitae que resalta las habilidades y experiencia clave de un profesional.</p>
+                        <a href="#" class="portfolio-link" data-project="Diseño de Currículum Profesional">Ver Detalles</a>
+                    </div>
+                </div>
+
+                </div>
+        </section>
+
+        <section id="contacto" class="py-16">
+            <h2 class="section-title">Contáctame</h2>
+            <div class="card text-center">
+                <p class="text-lg text-gray-700 mb-6">
+                    ¿Listo para llevar tus proyectos al siguiente nivel?
+                    Ponte en contacto para discutir tus necesidades y obtener una solución personalizada.
+                </p>
+                <a href="mailto:asistenteandresrd@gmail.com" class="service-button inline-flex">
+                    <i data-lucide="send" class="icon"></i> Enviar Correo
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Claudio Andrés de los Santos. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <div id="projectModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <h3 id="modalProjectTitle" class="text-2xl font-bold text-gray-800 mb-4"></h3>
+            <p class="text-gray-700 mb-4">
+                ¡Aquí es donde se mostrarían los detalles impresionantes de este proyecto!
+                Podríamos incluir capturas de pantalla, descripciones detalladas, testimonios de clientes y resultados obtenidos.
+            </p>
+            <p class="text-gray-600">
+                Este es un ejemplo de cómo se presentaría un trabajo resuelto para impresionar a tus clientes.
+                ¡Contacta a Claudio Andrés para que tu proyecto sea el próximo en esta sección!
+            </p>
+        </div>
+    </div>
+
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                const href = this.getAttribute('href');
+                // Prevent smooth scroll for href="#" which causes the querySelector error
+                if (href === '#') {
+                    e.preventDefault(); // Prevent default jump to top if it's just '#'
+                    return;
+                }
+                
+                e.preventDefault();
+                // Ensure the element exists before attempting to scroll
+                const targetElement = document.querySelector(href);
+                if (targetElement) {
+                    targetElement.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                } else {
+                    console.warn(`Element with ID '${href.substring(1)}' not found for smooth scrolling.`);
+                }
+            });
+        });
+
+        // Modal functionality for "Ver Detalles" buttons
+        const projectModal = document.getElementById('projectModal');
+        const closeButton = document.querySelector('.close-button');
+        const modalProjectTitle = document.getElementById('modalProjectTitle');
+
+        document.querySelectorAll('.portfolio-link').forEach(button => {
+            button.addEventListener('click', function(e) {
+                e.preventDefault();
+                const projectName = this.getAttribute('data-project');
+                modalProjectTitle.textContent = projectName;
+                projectModal.style.display = 'flex'; // Use flex to center the modal
+            });
+        });
+
+        closeButton.addEventListener('click', () => {
+            projectModal.style.display = 'none';
+        });
+
+        // Close modal if clicked outside of the content
+        window.addEventListener('click', (e) => {
+            if (e.target === projectModal) {
+                projectModal.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>
